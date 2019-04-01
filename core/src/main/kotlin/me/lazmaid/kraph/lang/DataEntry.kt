@@ -41,6 +41,10 @@ internal sealed class DataEntry {
                 }
     }
 
+    class EnumData(private val value: Enum<*>) : DataEntry() {
+        override fun print(format: PrintFormat) = value.name
+    }
+
     class ArrayData(private val values: List<DataEntry>) : DataEntry() {
         override fun print(format: PrintFormat) =
             "[${ values.joinToString(", ") { it.print(format) } }]"
