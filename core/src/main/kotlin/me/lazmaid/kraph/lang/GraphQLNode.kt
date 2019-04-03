@@ -1,5 +1,6 @@
 package me.lazmaid.kraph.lang
 
+import me.lazmaid.kraph.types.KraphEnumLikeType
 import me.lazmaid.kraph.types.KraphVariable
 import me.lazmaid.kraph.types.KraphVariableType
 
@@ -37,7 +38,8 @@ abstract internal class GraphQLNode {
                 is KraphVariableType -> DataEntry.VariableType(value)
                 is List<*>  -> convertToArrayData(value)
                 is Map<*,*> -> convertToObjectData(value as Map<String, *>)
-                is Enum<*> -> DataEntry.EnumData(value)
+                is Enum<*> -> DataEntry.EnumData(value.name) // use proper enum name
+                is KraphEnumLikeType -> DataEntry.EnumData(value.value) // use passed in string
                 else        -> throw RuntimeException("Unsupported Type: $value")
             }
 }
